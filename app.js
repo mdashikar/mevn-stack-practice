@@ -1,3 +1,4 @@
+/* eslint-disable */
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -6,6 +7,7 @@ var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const config = require('./config/secret');
 var book = require('./routes/book');
+var auth = require('./routes/auth');
 var app = express();
 
 mongoose.connect(config.database, function(err) {
@@ -19,6 +21,7 @@ app.use(bodyParser.urlencoded({ 'extended': 'false' }));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/books', express.static(path.join(__dirname, 'dist')));
 app.use('/book', book);
+app.use('/api/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
